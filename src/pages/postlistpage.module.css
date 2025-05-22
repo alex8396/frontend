@@ -1,5 +1,8 @@
-.postlist {
+.postlistpage {
+  padding: 0 1rem;
+}
+.postList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }

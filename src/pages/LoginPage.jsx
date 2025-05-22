@@ -1,20 +1,25 @@
-import { useState, useEffect } from 'react'
 import css from './registerpage.module.css'
+import { useEffect, useState } from 'react'
+import { loginUser } from '../apis/userApi'
 import { useNavigate } from 'react-router-dom'
+
 import { useDispatch } from 'react-redux'
 import { setUserInfo } from '../store/userSlice'
-import { loginUser } from '../apis/userApi'
+
+import KakaoLoginButton from '../components/KakaoLoginButton'
 
 export const LoginPage = () => {
-  const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errUsername, setErrUsername] = useState('')
   const [errPassword, setErrPassword] = useState('')
+
   const [loginStatus, setLoginStatus] = useState('') // 로그인 상태
   const [redirect, setRedirect] = useState(false) // 로그인 상태 메시지
 
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const validateUsername = value => {
     if (!value) {
       setErrUsername('')
@@ -61,12 +66,14 @@ export const LoginPage = () => {
 
       if (userData) {
         setLoginStatus('로그인 성공')
+        //
         dispatch(setUserInfo(userData))
+
         setTimeout(() => {
           setRedirect(true)
-        }, 1000)
+        }, 500)
       } else {
-        console.log('----')
+        setLoginStatus('사용자가 없습니다')
       }
     } catch (err) {
       console.error('로그인 오류---', err)
@@ -81,7 +88,6 @@ export const LoginPage = () => {
       navigate('/')
     }
   }, [redirect, navigate])
-
   return (
     <main className={css.loginpage}>
       <h2>로그인 페이지</h2>
@@ -98,6 +104,12 @@ export const LoginPage = () => {
         <strong>{errPassword}</strong>
         <button type="submit">로그인</button>
       </form>
+
+      {/* 소셜 로그인 섹션 추가 */}
+      <div className={css.socialLogin}>
+        <p>소셜 계정으로 로그인</p>
+        <KakaoLoginButton />
+      </div>
     </main>
   )
 }

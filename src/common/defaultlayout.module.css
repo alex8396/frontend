@@ -1,6 +1,9 @@
 .defaultlayout {
-  border: 1px solid red;
   max-width: 600px;
-  width: calc(100% - 4rem);
+  height: 100vh;
   margin: auto;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 2rem;
 }

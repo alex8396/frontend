@@ -8,7 +8,7 @@ export const DefaultLayout = () => {
     <div className={css.defaultlayout}>
       <Header />
       <Outlet />
-      <footer>카피라이트 영역</footer>
+      <footer></footer>
     </div>
   )
 }

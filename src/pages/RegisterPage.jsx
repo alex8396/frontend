@@ -1,7 +1,8 @@
-import { useState } from 'react'
 import css from './registerpage.module.css'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../apis/userApi'
+import KakaoLoginButton from '../components/KakaoLoginButton'
 
 export const RegisterPage = () => {
   const [username, setUsername] = useState('')
@@ -10,6 +11,8 @@ export const RegisterPage = () => {
   const [errUsername, setErrUsername] = useState('')
   const [errPassword, setErrPassword] = useState('')
   const [errPasswordOk, setErrPasswordOk] = useState('')
+
+  //
   const [registerState, setRegisterState] = useState('')
   const navigate = useNavigate()
 
@@ -63,6 +66,10 @@ export const RegisterPage = () => {
     validatePasswordCheck(value)
   }
 
+  // 회원가입 버튼 클릭 시
+  // 1. 유효성 검사
+  // 2. 회원가입 API 호출
+  // 3. 성공 시 로그인 페이지로 이동
   const register = async e => {
     e.preventDefault()
     console.log('회원가입', username, password, passwordOk)
@@ -86,9 +93,8 @@ export const RegisterPage = () => {
       setRegisterState('등록완료')
       navigate('/login')
     } catch (err) {
-      console.log('회원가입 실패', err)
+      setRegisterState('회원가입 실패')
       if (err.response) {
-        // 서버가 응답을 반환한 경우
         console.log('오류 응답 데이터 --', err.response.data)
       }
     }
@@ -97,6 +103,7 @@ export const RegisterPage = () => {
   return (
     <main className={css.registerpage}>
       <h2>회원가입 페이지</h2>
+      {/*  */}
       {registerState && <strong>{registerState}</strong>}
       <form className={css.container} onSubmit={register}>
         <input
@@ -122,6 +129,12 @@ export const RegisterPage = () => {
         <strong>{errPasswordOk}</strong>
         <button type="submit">가입하기</button>
       </form>
+
+      {/* 소셜 회원가입 섹션 추가 */}
+      <div className={css.socialLogin}>
+        <p>소셜 계정으로 간편하게 가입하기</p>
+        <KakaoLoginButton />
+      </div>
     </main>
   )
 }
