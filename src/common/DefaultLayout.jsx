@@ -9,7 +9,7 @@ export const DefaultLayout = () => {
     <div className={css.defaultlayout}>
       <Header />
       <Outlet />
-      <footer>dd</footer>
+      <footer></footer>
     </div>
   )
 }
